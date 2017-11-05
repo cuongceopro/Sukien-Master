@@ -4,6 +4,7 @@ export const response = () => {
     const data = {
         'daysList' :  ['10/01', '10/02', '10/03', '10/04', '10/05', '10/06', '10/07'],
         'locationList' : ['Tokyo', 'Osaka', 'Nagoya', 'Fukuoka', 'Hiroshima', 'Hokkaido', 'Shizuoka'],
+        'locationAnswerList' : ['Tokyo', 'Osaka', 'Nagoya', 'Fukuoka', 'Hiroshima', 'Hokkaido', 'Shizuoka'],
         'successList' : ['3/5', '2/5', '1/5', '4/5', '2/5', '3/5', '1/5'],
         'warningList' : ['1/5', '2/5', '3/5', '4/5', '1/5', '2/5', '1/5'],
         'removeList' : ['2/5', '3/5', '4/5', '1/5', '2/5', '3/5', '4/5'],
