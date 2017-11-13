@@ -5,47 +5,42 @@ import { Link } from 'react-router';
 import 'rc-calendar/assets/index.css';
 import Calendar from 'rc-calendar';
 
+const format = 'YYYY-MM-DD 18:00~';
+
 export class InputDemo extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      switches: _.fill(Array(5), true),
-      editableSelect3: 1,
+      title : '',
+      memo : '',
+      location : '',
+      time : '' 
     };
   }
 
-  onCloseModal(modalName) {
-    this.setState({ [modalName]: false });
+  onChangeText(e){
+    console.log(this.state.title);
+    console.log(e.target);
+    const { name, value } = e.target;
+    const {state} = this.state;
+    state[name] = value;
+    this.setState({ state : state }); 
   }
 
-  onRenderModal(modalName) {
-    this.setState({ [modalName]: true });
-  }
+  handleCalendarChange(value){
+    console.log(value);
+    console.log(value && value.format(format));
+    const test = value.format(format);
+    var selected = '';
+    if(this.state.textarea){
+     selected = this.state.textarea + '\n' + test;
+    } else {
+     selected = test;
+    }
 
-  onTextChange(key, event) {
-    this.setState({ [key]: event.currentTarget.value });
-  }
+    this.setState({ textarea : selected });
 
-  onSelectChange(key, value) {
-    this.setState({ [key]: value});
-  }
-
-  onSwitchChange(index) {
-    let switches = this.state.switches;
-    switches[index] = !switches[index];
-    this.setState({ switches });
-  }
-
-  renderBreadcrumbs() {
-    return (
-      <Breadcrumbs>
-        <Link to='/'>
-          Home
-        </Link>
-          Inputs
-      </Breadcrumbs>
-    );
   }
 
   render() {
@@ -53,11 +48,30 @@ export class InputDemo extends React.Component {
       <Page  title='Create Event'>
             <Panel title='Event Detail'>
 
-              <Input
+            <form>
+      <div>
+      <label className="radio-inline custom-radio nowrap">
+      <input
+        type='text'
+        name='title'
+        label='OK' 
+        value='success'
+        defaultChecked = 'true'
+        onChange = {this.handleChange}/>
+        OK
+        </label>
+        </div>
+        </form>
+              <form>
+                <label>Event Title</label>
+              <input
+                className = 'form-control '
                 label='Event Title'
                 placeholder='Enter Tittle'
-                onChange={e => this.onTextChange('address', e)}
-                value={this.state.address} />
+                name='title'
+                onChange={e => this.onChangeText(e)}
+                value={this.state.title} />
+              </form>
 
               <Input
                 label='Memo'
@@ -67,7 +81,7 @@ export class InputDemo extends React.Component {
                 
               <Textarea
                 name='textarea'
-                placeholder='Location 1 /n Location 2'
+                placeholder='Location 1&#13;&#10;Location 2'
                 label='Location'
                 onChange={e => this.onTextChange('textarea', e)}
                 value={this.state.textarea} />
@@ -88,7 +102,7 @@ export class InputDemo extends React.Component {
                 </Col>
                 <Col>
 
-              <Calendar />
+              <Calendar onChange={this.handleCalendarChange.bind(this)}/>
 
               </Col>
             </Row>
