@@ -202,8 +202,8 @@ export class PageTop extends React.Component {
       <div className="page-top clearfix" scroll-position="scrolled" max-height="50">
         {this.renderLogo()}
         {this.renderHamburgerMenu()}
-        {this.renderSearch()}
-        {this.renderUserSection()}
+        {/*{this.renderSearch()}*/}
+        {/*{this.renderUserSection()}*/}
       </div>
     );
   }

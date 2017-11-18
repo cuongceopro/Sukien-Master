@@ -81,22 +81,21 @@ class AppLayout extends React.Component {
     return (
       <div>
         <main className=''>
-          <Sidebar {...this.props} />
+          {/*<Sidebar {...this.props} />*/}
           <PageTop location={this.props.location} user={this.state.user} />
 
-          <div className="al-main">
+          {/*<div className="al-main">*/}
             <div className="al-content">
               {React.cloneElement(this.props.children, _.assign({}, this.props, { user: this.state.user }))}
             </div>
-          </div>
+          {/*</div>*/}
 
           <footer className="al-footer clearfix">
             <div className="al-footer-right">Created with <i className="ion-heart"></i></div>
             <div className="al-footer-main clearfix">
-              <div className="al-copy">React Webpack Skeleton</div>
+              <div className="al-copy">Copyright (c) 2017 Cuong Ceopro</div>
               <ul className="al-share clearfix">
-                <li><i className="socicon socicon-facebook"></i></li>
-                <li><i className="socicon socicon-twitter"></i></li>
+                <li><a href="https://www.facebook.com/Cuong.Ceopro"><i className="socicon socicon-facebook"></i></a></li>
                 <li><i className="socicon socicon-google"></i></li>
                 <li><i className="socicon socicon-github"></i></li>
               </ul>
