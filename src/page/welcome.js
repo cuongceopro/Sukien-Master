@@ -182,47 +182,47 @@ export class Welcome extends React.Component {
     //   </TableRow>
     // );
 
-    var selectList = null;
-    // const selectList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
-    //   <td>
-    //     <form>
-    //       <div>
-    //         <label className="radio-inline custom-radio nowrap">
-    //           <input
-    //             type='radio'
-    //             name={day}
-    //             label='OK'
-    //             value='success'
-    //             defaultChecked='true'
-    //             onChange={this.handleChange} />
-    //           OK
-    //     </label>
-    //       </div>
-    //       <div>
-    //         <label className="radio-inline custom-radio nowrap">
-    //           <input
-    //             type='radio'
-    //             name={day}
-    //             label='50/50'
-    //             value='warning'
-    //             onChange={this.handleChange} />
-    //           50/50
-    //   </label>
-    //       </div>
-    //       <div>
-    //         <label className="radio-inline custom-radio nowrap">
-    //           <input
-    //             type='radio'
-    //             name={day}
-    //             label='NG'
-    //             value='remove'
-    //             onChange={this.handleChange} />
-    //           NG
-    //   </label>
-    //       </div>
-    //     </form>
-    //   </td>
-    // );
+    // var selectList = null;
+    const selectList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
+      <td>
+        <form>
+          <div>
+            <label className="radio-inline custom-radio nowrap">
+              <input
+                type='radio'
+                name={day}
+                label='OK'
+                value='success'
+                defaultChecked='true'
+                onChange={this.handleChange} />
+              OK
+        </label>
+          </div>
+          <div>
+            <label className="radio-inline custom-radio nowrap">
+              <input
+                type='radio'
+                name={day}
+                label='50/50'
+                value='warning'
+                onChange={this.handleChange} />
+              50/50
+      </label>
+          </div>
+          <div>
+            <label className="radio-inline custom-radio nowrap">
+              <input
+                type='radio'
+                name={day}
+                label='NG'
+                value='remove'
+                onChange={this.handleChange} />
+              NG
+      </label>
+          </div>
+        </form>
+      </td>
+    );
 
     return (
       <Page title='SU KIEN MASTER'>
