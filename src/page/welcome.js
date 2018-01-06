@@ -10,7 +10,11 @@ export class Welcome extends React.Component {
     this.state = {
       addData: null,
       locationData: null,
-      data: null
+      data: null,
+      successList : null,
+      warningList : null,
+      removeList : null,
+      isMax : null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,6 +33,66 @@ export class Welcome extends React.Component {
         data.daysList.forEach(function (value) {
           addData[value] = 'success';
         });
+
+        var successListData = [];
+        var warningListData = [];
+        var removeListData = [];
+
+        var count = 0;
+        var pointArr = {};
+        var maxPoint = 0;
+        var point = 0;
+        // var successCount = 0;
+        // var warningCount = 0;
+        // var removeCount = 0;
+        data.daysList.forEach(function (value) {
+          successListData[count] = 0;
+          warningListData[count] = 0;
+          removeListData[count] = 0;
+
+          for(var i = 0; i < data.answersData.length; i++){
+            switch(data.answersData[i].data[count]){
+              case '0' :
+                successListData[count]++;
+                break;
+              case '1' :
+                warningListData[count]++;
+                break;
+              case '2' :
+                removeListData[count]++;
+                break;
+            }
+          }
+          // successListData[count] = successCount + '/' + data.answersData.length;
+          // warningListData[count] = warningCount + '/' + data.answersData.length;
+          // removeListData[count] = removeCount + '/' + data.answersData.length;
+          point = 2 * successListData[count] + warningListData[count];
+          if ( point > maxPoint ) maxPoint = point;
+          pointArr[value] = point;
+          count++;
+        });
+
+        // console.log('SuccessListData: ')
+        // console.log(successListData);
+        // console.log('WarningListData: ')
+        // console.log(warningListData);
+        // console.log('RemoveListData: ')
+        // console.log(removeListData);
+        console.log(pointArr);
+        console.log('MaxPoint : ' + maxPoint);
+
+        var isMax = {};
+        data.daysList.forEach(function (value) {
+          if(pointArr[value] == maxPoint){
+            isMax[value] = true;
+          }
+          else {
+            isMax[value] = false;
+          } 
+        });
+
+        console.log(isMax)
+
         const locationData = [];
         locationData.push({ value: 'No Select', label: 'No Select' });
         data.locationList.forEach(function (value) {
@@ -36,8 +100,15 @@ export class Welcome extends React.Component {
         }
         );
 
-        _this.setState({ addData: addData, locationData: locationData, data: data });
-
+        _this.setState({ 
+          addData: addData,
+          locationData: locationData, 
+          data: data, 
+          successList : successListData,
+          warningList : warningListData,
+          removeList : removeListData,
+          isMax : isMax
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -124,8 +195,14 @@ export class Welcome extends React.Component {
   getDaysList() {
     var daysList = null;
     if (this.state.data) {
-      daysList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
-        <th>{day}</th>
+      daysList = !this.state.data ? '' : this.state.data.daysList.map((day) => {
+        if(this.state.isMax[day]){
+          return <td><Button type='success' title= {day} asize='xs' /></td>
+        }
+        else {
+          return <td><Button type='default' title= {day} asize='xs' /></td>;
+        }
+      }
       );
     }
     return daysList;
@@ -164,15 +241,15 @@ export class Welcome extends React.Component {
     // const locationAnswerList = this.state.data.locationAnswerList.map((location) =>
     //   <th>{location}</th>
     // );
-    // const successList = this.state.data.successList.map((element) =>
-    //   <th>{element}</th>
-    // );
-    // const warningList = this.state.data.warningList.map((element) =>
-    //   <th>{element}</th>
-    // );
-    // const removeList = this.state.data.removeList.map((element) =>
-    //   <th>{element}</th>
-    // );
+    const successList = !this.state.successList? <th></th> :   this.state.successList.map((element) =>
+      <th>{element}/{this.state.data.answersData.length}</th>
+    );
+    const warningList = !this.state.warningList? <th></th> :  this.state.warningList.map((element) =>
+      <th>{element}/{this.state.data.answersData.length}</th>
+    );
+    const removeList = !this.state.removeList? <th></th> :  this.state.removeList.map((element) =>
+      <th>{element}/{this.state.data.answersData.length}</th>
+    );
 
     var answersList = null;
     // const answersList = !this.state.data ? '' : this.state.data.answersData.map((answer) =>
@@ -229,7 +306,7 @@ export class Welcome extends React.Component {
         <Panel title='Event Detail'>
           <Table>
             <TableHead>
-              <th>Name</th>
+              <th></th>
               {this.getDaysList()}
             </TableHead>
             <TableBody>
@@ -238,6 +315,7 @@ export class Welcome extends React.Component {
                 <td>Location</td>
                 {locationAnswerList}
               </TableRow>
+    */}
               <TableRow>
                 <td><Button type='success' title= '' asize='xs' /></td>
                 {successList}
@@ -250,7 +328,6 @@ export class Welcome extends React.Component {
                 <td><Button type='remove' title= '' asize='xs' /></td>
                 {removeList}
               </TableRow>
-    */}
               {this.getAnswersList()}
             </TableBody>
           </Table>
@@ -260,10 +337,11 @@ export class Welcome extends React.Component {
           <Input
             label='Name'
             placeholder='Enter Name' />
+            {/*
           <Select
             label='aaaaa'
             placeholder='Location'
-            options={this.state.locationData} />
+            options={this.state.locationData} /> */}
           <Table>
             <TableHead>
               {daysList}
