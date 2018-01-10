@@ -21,8 +21,10 @@ export class Welcome extends React.Component {
 
   componentWillMount() {
     let _this = this;
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master?exec_id=abcabcd')
-      .then((response) => response.json())
+    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd',{
+      method : 'POST',
+      body: { "answer" : ""},
+    }).then((response) => response.json())
       .then((response) => {
         //var data = JSON.parse(response)
         var data = null;
@@ -231,6 +233,37 @@ export class Welcome extends React.Component {
     return answersList;
   }
 
+  addAnswer(e){
+    e.preventDefault();
+
+    console.log('Here')
+
+    const answer = JSON.stringify({
+      name : "Test_0110_004",
+      data : [1, 2, 2, 0, 0, 2, 0]
+    });
+
+    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd',{
+      method : 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+         answer : {
+          "name" : "Test_0110_004",
+          "data" : [1, 2, 2, 0, 0, 2, 0]
+         }
+      })
+    }).then((response) => response.json())
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
     // var daysList = null;
     var daysList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
@@ -357,7 +390,7 @@ export class Welcome extends React.Component {
           </Table>
           <br />
           <br />
-          <Button type="add" />
+          <Button type="add" onClick={this.addAnswer.bind(this)} />
         </Panel>
 
       </Page>

@@ -79,6 +79,7 @@ export class InputDemo extends React.Component {
                   onChange={e => this.onChangeText(e)}
                   value={this.state.memo} />
                 <br />
+                {/*
                 <p>Location</p>
                 <Textarea
                   name='textarea'
@@ -86,6 +87,7 @@ export class InputDemo extends React.Component {
                   name='location'
                   onChange={e => this.onChangeText(e)}
                   value={this.state.location} />
+                */}
               </form>
 
             </Panel>
