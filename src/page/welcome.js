@@ -14,7 +14,8 @@ export class Welcome extends React.Component {
       successList : null,
       warningList : null,
       removeList : null,
-      isMax : null
+      isMax : null,
+      name : null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -33,7 +34,7 @@ export class Welcome extends React.Component {
         //console.log(data.daysList)
         var addData = {};
         data.daysList.forEach(function (value) {
-          addData[value] = 'success';
+          addData[value] = '0';
         });
 
         var successListData = [];
@@ -160,8 +161,15 @@ export class Welcome extends React.Component {
   handleChange(e) {
     const { value, name } = e.target;
     var addData = this.state.addData;
+    console.log(this.state.addData)
     addData[name] = value;
     this.setState({ addData: addData });
+  }
+
+  handleChangeName(e){
+    e.preventDefault();
+    console.log(this.state.name)
+    this.setState({ name : e.target.value})
   }
 
   makeCollum(array) {
@@ -188,7 +196,18 @@ export class Welcome extends React.Component {
     var addData = this.state.addData;
     if (addData) {
       Object.keys(addData).forEach(function (key) {
-        addList.push(<td><Button type={addData[key]} title='' asize='xs' /></td>);
+        switch(addData[key]){
+          case "0" :
+            addList.push(<td><Button type="success" title='' asize='xs' /></td>);
+            break;
+          case "1" :
+            addList.push(<td><Button type="warning" title='' asize='xs' /></td>);
+            break;
+          case "2" :
+            addList.push(<td><Button type="remove" title='' asize='xs' /></td>);
+            break;
+        }
+        //addList.push(<td><Button type={addData[key]} title='' asize='xs' /></td>);
       });
     }
     return addList;
@@ -235,12 +254,23 @@ export class Welcome extends React.Component {
 
   addAnswer(e){
     e.preventDefault();
+    let _this = this;
 
     console.log('Here')
 
+    var addList = [];
+    var addData = this.state.addData;
+    if (addData) {
+      Object.keys(addData).forEach(function (key) {
+        addList.push(addData[key]);
+      });
+    }
+
+    console.log(addList)
+
     const answer = JSON.stringify({
-      name : "Test_0110_004",
-      data : [1, 2, 2, 0, 0, 2, 0]
+      name : this.state.name,
+      data : addList
     });
 
     fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd',{
@@ -251,8 +281,8 @@ export class Welcome extends React.Component {
       },
       body: JSON.stringify({
          answer : {
-          "name" : "Test_0110_004",
-          "data" : [1, 2, 2, 0, 0, 2, 0]
+          "name" : _this.state.name,
+          "data" : addList
          }
       })
     }).then((response) => response.json())
@@ -269,8 +299,8 @@ export class Welcome extends React.Component {
     var daysList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
       <th>{day}</th>
     );
-    console.log('Day List:')
-    console.log(daysList)
+    // console.log('Day List:')
+    // console.log(daysList)
     // const locationAnswerList = this.state.data.locationAnswerList.map((location) =>
     //   <th>{location}</th>
     // );
@@ -302,7 +332,7 @@ export class Welcome extends React.Component {
                 type='radio'
                 name={day}
                 label='OK'
-                value='success'
+                value='0'
                 defaultChecked='true'
                 onChange={this.handleChange} />
               OK
@@ -314,7 +344,7 @@ export class Welcome extends React.Component {
                 type='radio'
                 name={day}
                 label='50/50'
-                value='warning'
+                value='1'
                 onChange={this.handleChange} />
               50/50
       </label>
@@ -325,7 +355,7 @@ export class Welcome extends React.Component {
                 type='radio'
                 name={day}
                 label='NG'
-                value='remove'
+                value='2'
                 onChange={this.handleChange} />
               NG
       </label>
@@ -367,10 +397,19 @@ export class Welcome extends React.Component {
         </Panel>
 
         <Panel title='Add'>
+        <form>
+                <p>Name</p>
+                <input
+                  className='form-control '
+                  placeholder='Enter Name'
+                  name='name'
+                  onChange={e => this.handleChangeName(e)}
+                  value={this.state.name} />
+              </form>
+          {/*
           <Input
             label='Name'
             placeholder='Enter Name' />
-            {/*
           <Select
             label='aaaaa'
             placeholder='Location'
