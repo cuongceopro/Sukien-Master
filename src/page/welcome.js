@@ -1,5 +1,4 @@
 import React from 'react';
-//import { Page, Panel } from 'react-blur-admin';
 import { Row, Col } from 'react-flex-proto';
 import { response } from '../api/stub';
 import { Page, Panel, Table, TableHead, TableBody, TableRow, Button, EditableText, Pagination, Breadcrumbs, Input, Select } from 'react-blur-admin';
@@ -11,151 +10,96 @@ export class Welcome extends React.Component {
       addData: null,
       locationData: null,
       data: null,
-      successList : null,
-      warningList : null,
-      removeList : null,
-      isMax : null,
-      name : null
+      successList: null,
+      warningList: null,
+      removeList: null,
+      isMax: null,
+      name: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
     let _this = this;
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd',{
-      method : 'POST',
-      body: { "answer" : ""},
+    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd', {
+      method: 'POST',
+      body: { "answer": "" },
     }).then((response) => response.json())
       .then((response) => {
-        //var data = JSON.parse(response)
         var data = null;
         data = JSON.parse(response)
-        console.log(data);
-        //console.log(data.daysList)
-        var addData = {};
-        data.daysList.forEach(function (value) {
-          addData[value] = '0';
-        });
-
-        var successListData = [];
-        var warningListData = [];
-        var removeListData = [];
-
-        var count = 0;
-        var pointArr = {};
-        var maxPoint = 0;
-        var point = 0;
-        // var successCount = 0;
-        // var warningCount = 0;
-        // var removeCount = 0;
-        data.daysList.forEach(function (value) {
-          successListData[count] = 0;
-          warningListData[count] = 0;
-          removeListData[count] = 0;
-
-          for(var i = 0; i < data.answersData.length; i++){
-            switch(data.answersData[i].data[count]){
-              case '0' :
-                successListData[count]++;
-                break;
-              case '1' :
-                warningListData[count]++;
-                break;
-              case '2' :
-                removeListData[count]++;
-                break;
-            }
-          }
-          // successListData[count] = successCount + '/' + data.answersData.length;
-          // warningListData[count] = warningCount + '/' + data.answersData.length;
-          // removeListData[count] = removeCount + '/' + data.answersData.length;
-          point = 2 * successListData[count] + warningListData[count];
-          if ( point > maxPoint ) maxPoint = point;
-          pointArr[value] = point;
-          count++;
-        });
-
-        // console.log('SuccessListData: ')
-        // console.log(successListData);
-        // console.log('WarningListData: ')
-        // console.log(warningListData);
-        // console.log('RemoveListData: ')
-        // console.log(removeListData);
-        console.log(pointArr);
-        console.log('MaxPoint : ' + maxPoint);
-
-        var isMax = {};
-        data.daysList.forEach(function (value) {
-          if(pointArr[value] == maxPoint){
-            isMax[value] = true;
-          }
-          else {
-            isMax[value] = false;
-          } 
-        });
-
-        console.log(isMax)
-
-        const locationData = [];
-        locationData.push({ value: 'No Select', label: 'No Select' });
-        data.locationList.forEach(function (value) {
-          locationData.push({ value: value, label: value });
-        }
-        );
-
-        _this.setState({ 
-          addData: addData,
-          locationData: locationData, 
-          data: data, 
-          successList : successListData,
-          warningList : warningListData,
-          removeList : removeListData,
-          isMax : isMax
-          });
+        _this.test(data)
       })
       .catch((error) => {
         console.error(error);
       });
-    // this.getData();
-    // const data = response();
-    // const addData = {};
-    // data.daysList.forEach(function (value) {
-    //   addData[value] = 'success';
-    // });
-    // const locationData = [];
-    // locationData.push({ value: 'No Select', label: 'No Select' });
-    // data.locationList.forEach(function (value) {
-    //   locationData.push({ value: value, label: value });
-    // }
-    // );
-
-    // this.setState({ data: data, addData: addData, locationData: locationData });
   }
 
-  getData() {
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master?exec_id=abcabcd')
-      .then((response) => response.json())
-      .then((response) => {
-        // const data = JSON.parse(response)
-        // console.log(data);
-        // console.log(data.daysList)
-        // var addData = {};
-        // data.daysList.forEach(function (value) {
-        //   addData[value] = 'success';
-        // });
-        // const locationData = [];
-        // locationData.push({ value: 'No Select', label: 'No Select' });
-        // data.locationList.forEach(function (value) {
-        //   locationData.push({ value: value, label: value });
-        // }
-        // );
+  test(data){
+    var addData = {};
+    data.daysList.forEach(function (value) {
+      addData[value] = '0';
+    });
 
-        // this.setState({ data: data, addData: addData, locationData: locationData });
+    var successListData = [];
+    var warningListData = [];
+    var removeListData = [];
 
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    var count = 0;
+    var pointArr = {};
+    var maxPoint = 0;
+    var point = 0;
+
+    data.daysList.forEach(function (value) {
+      successListData[count] = 0;
+      warningListData[count] = 0;
+      removeListData[count] = 0;
+
+      for (var i = 0; i < data.answersData.length; i++) {
+        switch (data.answersData[i].data[count]) {
+          case '0':
+            successListData[count]++;
+            break;
+          case '1':
+            warningListData[count]++;
+            break;
+          case '2':
+            removeListData[count]++;
+            break;
+        }
+      }
+      point = 2 * successListData[count] + warningListData[count];
+      if (point > maxPoint) maxPoint = point;
+      pointArr[value] = point;
+      count++;
+    });
+
+    var isMax = {};
+    data.daysList.forEach(function (value) {
+      if (pointArr[value] == maxPoint) {
+        isMax[value] = true;
+      }
+      else {
+        isMax[value] = false;
+      }
+    });
+
+    const locationData = [];
+    locationData.push({ value: 'No Select', label: 'No Select' });
+    data.locationList.forEach(function (value) {
+      locationData.push({ value: value, label: value });
+    }
+    );
+
+    this.setState({
+      addData: addData,
+      locationData: locationData,
+      data: data,
+      successList: successListData,
+      warningList: warningListData,
+      removeList: removeListData,
+      isMax: isMax
+    });
   }
 
   handleChange(e) {
@@ -166,26 +110,25 @@ export class Welcome extends React.Component {
     this.setState({ addData: addData });
   }
 
-  handleChangeName(e){
+  handleChangeName(e) {
     e.preventDefault();
     console.log(this.state.name)
-    this.setState({ name : e.target.value})
+    this.setState({ name: e.target.value })
   }
 
   makeCollum(array) {
     const collumData = array.map((element) => {
-      switch(element){
-        case "0" : 
+      switch (element) {
+        case "0":
           return <td><Button type='success' title='' asize='xs' /></td>;
           break;
-        case "1" :
+        case "1":
           return <td><Button type='warning' title='' asize='xs' /></td>;
           break;
-        case "2" :
+        case "2":
           return <td><Button type='remove' title='' asize='xs' /></td>;
           break;
       }
-      // <td><Button type={element} title='' asize='xs' /></td>
     }
     );
     return collumData;
@@ -196,18 +139,17 @@ export class Welcome extends React.Component {
     var addData = this.state.addData;
     if (addData) {
       Object.keys(addData).forEach(function (key) {
-        switch(addData[key]){
-          case "0" :
+        switch (addData[key]) {
+          case "0":
             addList.push(<td><Button type="success" title='' asize='xs' /></td>);
             break;
-          case "1" :
+          case "1":
             addList.push(<td><Button type="warning" title='' asize='xs' /></td>);
             break;
-          case "2" :
+          case "2":
             addList.push(<td><Button type="remove" title='' asize='xs' /></td>);
             break;
         }
-        //addList.push(<td><Button type={addData[key]} title='' asize='xs' /></td>);
       });
     }
     return addList;
@@ -217,11 +159,11 @@ export class Welcome extends React.Component {
     var daysList = null;
     if (this.state.data) {
       daysList = !this.state.data ? '' : this.state.data.daysList.map((day) => {
-        if(this.state.isMax[day]){
-          return <td><Button type='success' title= {day} asize='xs' /></td>
+        if (this.state.isMax[day]) {
+          return <td><Button type='success' title={day} asize='xs' /></td>
         }
         else {
-          return <td><Button type='default' title= {day} asize='xs' /></td>;
+          return <td><Button type='default' title={day} asize='xs' /></td>;
         }
       }
       );
@@ -252,7 +194,7 @@ export class Welcome extends React.Component {
     return answersList;
   }
 
-  addAnswer(e){
+  addAnswer(e) {
     e.preventDefault();
     let _this = this;
 
@@ -269,25 +211,27 @@ export class Welcome extends React.Component {
     console.log(addList)
 
     const answer = JSON.stringify({
-      name : this.state.name,
-      data : addList
+      name: this.state.name,
+      data: addList
     });
 
-    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd',{
-      method : 'POST',
+    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd', {
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-         answer : {
-          "name" : _this.state.name,
-          "data" : addList
-         }
+        answer: {
+          "name": _this.state.name,
+          "data": addList
+        }
       })
     }).then((response) => response.json())
       .then((response) => {
         console.log(response)
+        var data = JSON.parse(response)
+        _this.test(data)
       })
       .catch((error) => {
         console.error(error);
@@ -304,13 +248,13 @@ export class Welcome extends React.Component {
     // const locationAnswerList = this.state.data.locationAnswerList.map((location) =>
     //   <th>{location}</th>
     // );
-    const successList = !this.state.successList? <th></th> :   this.state.successList.map((element) =>
+    const successList = !this.state.successList ? <th></th> : this.state.successList.map((element) =>
       <th>{element}/{this.state.data.answersData.length}</th>
     );
-    const warningList = !this.state.warningList? <th></th> :  this.state.warningList.map((element) =>
+    const warningList = !this.state.warningList ? <th></th> : this.state.warningList.map((element) =>
       <th>{element}/{this.state.data.answersData.length}</th>
     );
-    const removeList = !this.state.removeList? <th></th> :  this.state.removeList.map((element) =>
+    const removeList = !this.state.removeList ? <th></th> : this.state.removeList.map((element) =>
       <th>{element}/{this.state.data.answersData.length}</th>
     );
 
@@ -380,15 +324,15 @@ export class Welcome extends React.Component {
               </TableRow>
     */}
               <TableRow>
-                <td><Button type='success' title= '' asize='xs' /></td>
+                <td><Button type='success' title='' asize='xs' /></td>
                 {successList}
               </TableRow>
               <TableRow>
-                <td><Button type='warning' title= '' asize='xs' /></td>
+                <td><Button type='warning' title='' asize='xs' /></td>
                 {warningList}
               </TableRow>
               <TableRow>
-                <td><Button type='remove' title= '' asize='xs' /></td>
+                <td><Button type='remove' title='' asize='xs' /></td>
                 {removeList}
               </TableRow>
               {this.getAnswersList()}
@@ -397,15 +341,15 @@ export class Welcome extends React.Component {
         </Panel>
 
         <Panel title='Add'>
-        <form>
-                <p>Name</p>
-                <input
-                  className='form-control '
-                  placeholder='Enter Name'
-                  name='name'
-                  onChange={e => this.handleChangeName(e)}
-                  value={this.state.name} />
-              </form>
+          <form>
+            <p>Name</p>
+            <input
+              className='form-control '
+              placeholder='Enter Name'
+              name='name'
+              onChange={e => this.handleChangeName(e)}
+              value={this.state.name} />
+          </form>
           {/*
           <Input
             label='Name'
