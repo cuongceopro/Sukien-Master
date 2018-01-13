@@ -43,6 +43,33 @@ export class InputDemo extends React.Component {
 
   }
 
+  create(e){
+    let _this = this;
+    console.log(this.state);
+    var time = this.state.time.split('\n');
+    console.log(time)
+
+    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addevent', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title : _this.state.title,
+        memo : _this.state.memo,
+        time : time
+      }),
+    }).then((response) => response.json())
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+  }
+
   render() {
     return (
       <Page title='Create Event'>
@@ -104,7 +131,7 @@ export class InputDemo extends React.Component {
                 name='time'
                 onChange={e => this.onChangeText(e)}
                 value={this.state.time} />
-              <Button type="add" title="Create" />
+              <Button type="add" title="Create" onClick={this.create.bind(this)} />
             </Panel>
 
           </Col>

@@ -21,13 +21,18 @@ export class Welcome extends React.Component {
 
   componentWillMount() {
     let _this = this;
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd', {
+    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=01100001011000100110001118000110010101100110011001110000', {
       method: 'POST',
       body: { "answer": "" },
     }).then((response) => response.json())
       .then((response) => {
         var data = null;
+        var addData = {};
         data = JSON.parse(response)
+        data.daysList.forEach(function (value) {
+          addData[value] = '0';
+        });
+        _this.setState({ addData : addData });
         _this.test(data)
       })
       .catch((error) => {
@@ -36,11 +41,7 @@ export class Welcome extends React.Component {
   }
 
   test(data){
-    var addData = {};
-    data.daysList.forEach(function (value) {
-      addData[value] = '0';
-    });
-
+    
     var successListData = [];
     var warningListData = [];
     var removeListData = [];
@@ -92,7 +93,6 @@ export class Welcome extends React.Component {
     );
 
     this.setState({
-      addData: addData,
       locationData: locationData,
       data: data,
       successList: successListData,
@@ -195,7 +195,7 @@ export class Welcome extends React.Component {
   }
 
   addAnswer(e) {
-    e.preventDefault();
+    //e.preventDefault();
     let _this = this;
 
     console.log('Here')
