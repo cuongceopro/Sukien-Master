@@ -21,7 +21,7 @@ export class Welcome extends React.Component {
 
   componentWillMount() {
     let _this = this;
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=01100001011000100110001118000110010101100110011001110000', {
+    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
       method: 'POST',
       body: { "answer": "" },
     }).then((response) => response.json())
@@ -215,7 +215,7 @@ export class Welcome extends React.Component {
       data: addList
     });
 
-    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd', {
+    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
