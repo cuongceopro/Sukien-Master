@@ -63,6 +63,7 @@ export class InputDemo extends React.Component {
     }).then((response) => response.json())
       .then((response) => {
         console.log(response)
+        _this.props.history.push('/eventDetail/' + response);
       })
       .catch((error) => {
         console.error(error);
@@ -122,6 +123,12 @@ export class InputDemo extends React.Component {
         </Row>
 
         <Row>
+        <Col>
+            <Panel title='Calendar'>
+              <Calendar onChange={this.handleCalendarChange.bind(this)} />
+            </Panel>
+          </Col>
+
           <Col>
             <Panel title='Time'>
 
@@ -135,11 +142,7 @@ export class InputDemo extends React.Component {
             </Panel>
 
           </Col>
-          <Col>
-            <Panel title='Calendar'>
-              <Calendar onChange={this.handleCalendarChange.bind(this)} />
-            </Panel>
-          </Col>
+
 
         </Row>
 

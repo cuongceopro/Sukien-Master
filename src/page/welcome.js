@@ -48,7 +48,7 @@ export class Welcome extends React.Component {
 
     var count = 0;
     var pointArr = {};
-    var maxPoint = 0;
+    var maxPoint = 1;
     var point = 0;
 
     data.daysList.forEach(function (value) {
@@ -186,7 +186,7 @@ export class Welcome extends React.Component {
     if (this.state.data) {
       answersList = !this.state.data ? '' : this.state.data.answersData.map((answer) =>
         <TableRow>
-          <td>{answer.name}</td>
+          <th>{answer.name}</th>
           {this.makeCollum(answer.data)}
         </TableRow>
       );
@@ -313,7 +313,7 @@ export class Welcome extends React.Component {
         <Panel title='Event Detail'>
           <Table>
             <TableHead>
-              <th></th>
+              <th><td><Button type='default' title='&emsp;Answers&emsp;' asize='xs' /></td></th>
               {this.getDaysList()}
             </TableHead>
             <TableBody>

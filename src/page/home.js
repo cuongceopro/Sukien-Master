@@ -132,6 +132,10 @@ export class Home extends React.Component {
     return daysList;
   }
 
+  onCreate(e){
+    this.props.history.push('/create')
+  }
+
   render() {
     var daysList = daysListData.map((day) =>
       <th>{day}</th>
@@ -287,7 +291,7 @@ export class Home extends React.Component {
         </Panel>
         <Panel title='CREATE EVENT'>
         <p>Nhấn vào link dưới để tạo Event. </p>
-          <Button type='success' title='Create New Event Now !' asize='xs' />
+          <Button type='success' title='Create New Event Now !' onClick={this.onCreate.bind(this)} asize='xs' />
             </Panel>
               {/*}
             </Panel>
