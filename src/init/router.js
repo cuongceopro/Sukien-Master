@@ -15,6 +15,7 @@ import { TabsDemo } from 'src/page/tabs-demo';
 import { InputDemo } from 'src/page/input-demo';
 import { NotificationsDemo } from 'src/page/notifications-demo';
 import { Test } from 'src/page/test';
+import { Home } from 'src/page/home'
 /* End Demos */
 
 import { NotFound } from 'src/page/not-found';
@@ -34,7 +35,7 @@ export const AppRouter = (
       <Route path='/button-demo' component={ButtonDemo} />
       <Route path='/modal-demo' component={ModalDemo} />
       <Route path='/table-demo' component={TableDemo} />
-      <Route path='/test' component={Test} />
+      <Route path='/test' component={Home} />
       <Route path='/tabs-demo' component={TabsDemo} />
       <Route path='/input-demo' component={InputDemo} />
       <Route path='/notifications-demo' component={NotificationsDemo} />
