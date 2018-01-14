@@ -192,59 +192,57 @@ export class Home extends React.Component {
 
 
     return (
-      <Page title='Create Event'>
-
+      <Page title='SUKIEN-MASTER'>
+            <Panel title='How to use ?'>
+            <p>Vui lòng làm theo các bước sau.</p>
+            </Panel>
+        {/*}
         <Row>
           <Col>
 
             <Panel title='How to use ?'>
-              1. Nhập thông tin Event  <br />
-              <Row>
-                <Col>
+    */}
+              1. Nhập thông tin Event với các lựa chọn về thời gian<br />
+                <br />
 
-                  <Panel title='Event Detail'>
+                  <Panel title='[SAMPLE] Create Event'>
 
-                    <form>
-                      <p>Event Title</p>
-                      <input
-                        className='form-control '
-                        placeholder='Enter Tittle'
-                        name='title' />
-                      <br />
+                  <Input
+                      label='Event Title'
+                      value = 'Họp tất niên' 
+                      disabled
+                      />
                       <p>Memo</p>
-                      <input
-                        className='form-control '
-                        placeholder='Enter Memo'
-                        name='memo' />
-                      <br />
+                  <Textarea
+                      name='textarea'
+                      value = 'Dự định sẽ họp tất niên nên mọi người cho ý kiến nhé !'
+                      name='time' 
+                      disabled/>
                       <p>Time</p>
                     <Textarea
                       name='textarea'
-                      placeholder='2017-11-13 18:00~&#13;&#10;2017-11-20 18:00~'
-                      name='time' />
-                    <Button type="add" title="Create" />
-                    </form>
+                      value='2017-12-13 18:00~21:00&#13;&#10;2017-12-20 13:00~16:00&#13;&#10;2017-12-23 13:00~16:00'
+                      name='time' 
+                      disabled/>
+                    <Button type="add" title="Create" disabled/>
                   </Panel>
-                </Col>
-              </Row>
               2. Share link cho những người sẽ tham gia <br />
-              <Row>
-                <Col>
-                  <Panel title='Event Link'>
+                  <br />
+                  <Panel title='[SAMPLE] Event Link'>
                     <Input
                       label=''
-                      placeholder='https://sukien-master/eventDetail/1010101010181101010101010811010' />
+                      value='https://sukien-master/eventDetail/1010101010181101010101010811010' 
+                      disabled/>
                     <br />
                   </Panel>
-                </Col>
-              </Row>
+
               3. Người tham gia lựa chọn ngày giờ phù hợp với mình  <br />
-              <Row>
-                <Col>
-                  <Panel title='Add'>
+                  <br />
+                  <Panel title='[SAMPLE] Add'>
                     <Input
                       label='Name'
-                      placeholder='Thanh' />
+                      value='Thanh' 
+                      disabled/>
                     <Table>
                       <TableHead>
                         {daysList}
@@ -259,14 +257,12 @@ export class Home extends React.Component {
                       </TableBody>
                     </Table>
                     <br />
-                    <Button type="add" />
+                    <Button type="add" disabled/>
                   </Panel>
-                </Col>
-              </Row>
+
               4. Lựa chọn phương án phù hợp nhất cho tất cả mọi người  <br />
-              <Row>
-                <Col>
-                <Panel title='Event Detail'>
+              <br />
+                <Panel title='[SAMPLE] Event Detail'>
           <Table>
             <TableHead>
               <th></th>
@@ -289,11 +285,15 @@ export class Home extends React.Component {
             </TableBody>
           </Table>
         </Panel>
-                </Col>
-              </Row>
+        <Panel title='CREATE EVENT'>
+        <p>Nhấn vào link dưới để tạo Event. </p>
+          <Button type='success' title='Create New Event Now !' asize='xs' />
+            </Panel>
+              {/*}
             </Panel>
           </Col>
         </Row>
+  */}
 
       </Page>
 
