@@ -21,7 +21,7 @@ export class Welcome extends React.Component {
 
   componentWillMount() {
     let _this = this;
-    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
+    return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=abcabcd', {
       method: 'POST',
       body: { "answer": "" },
     }).then((response) => response.json())
@@ -152,18 +152,22 @@ export class Welcome extends React.Component {
         }
       });
     }
-    return addList;
+    if(addList.length != 0){
+      return addList;
+    } else {
+      return <td>Loading</td>
+    }
   }
 
   getDaysList() {
     var daysList = null;
     if (this.state.data) {
-      daysList = !this.state.data ? '' : this.state.data.daysList.map((day) => {
+      daysList = !this.state.data ? <td>Loading</td> : this.state.data.daysList.map((day) => {
         if (this.state.isMax[day]) {
-          return <td><Button type='success' title={day} asize='xs' /></td>
+          return <td key={day}><Button type='success' title={day} asize='xs' /></td>
         }
         else {
-          return <td><Button type='default' title={day} asize='xs' /></td>;
+          return <td key={day}><Button type='default' title={day} asize='xs' /></td>;
         }
       }
       );
@@ -184,7 +188,7 @@ export class Welcome extends React.Component {
   getAnswersList() {
     var answersList = null;
     if (this.state.data) {
-      answersList = !this.state.data ? '' : this.state.data.answersData.map((answer) =>
+      answersList = !this.state.data ? <th>Loading</th> : this.state.data.answersData.map((answer) =>
         <TableRow>
           <th>{answer.name}</th>
           {this.makeCollum(answer.data)}
@@ -240,7 +244,7 @@ export class Welcome extends React.Component {
 
   render() {
     // var daysList = null;
-    var daysList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
+    var daysList = !this.state.data ? <th>Loading</th> : this.state.data.daysList.map((day) =>
       <th>{day}</th>
     );
     // console.log('Day List:')
@@ -248,13 +252,13 @@ export class Welcome extends React.Component {
     // const locationAnswerList = this.state.data.locationAnswerList.map((location) =>
     //   <th>{location}</th>
     // );
-    const successList = !this.state.successList ? <th></th> : this.state.successList.map((element) =>
+    const successList = !this.state.successList ? <th>Loading</th> : this.state.successList.map((element) => 
       <th>{element}/{this.state.data.answersData.length}</th>
     );
-    const warningList = !this.state.warningList ? <th></th> : this.state.warningList.map((element) =>
+    const warningList = !this.state.warningList ? <th>Loading</th> : this.state.warningList.map((element) =>
       <th>{element}/{this.state.data.answersData.length}</th>
     );
-    const removeList = !this.state.removeList ? <th></th> : this.state.removeList.map((element) =>
+    const removeList = !this.state.removeList ? <th>Loading</th> : this.state.removeList.map((element) =>
       <th>{element}/{this.state.data.answersData.length}</th>
     );
 
@@ -267,7 +271,7 @@ export class Welcome extends React.Component {
     // );
 
     // var selectList = null;
-    const selectList = !this.state.data ? '' : this.state.data.daysList.map((day) =>
+    const selectList = !this.state.data ? <td>Loading</td> : this.state.data.daysList.map((day) =>
       <td>
         <form>
           <div>
@@ -313,7 +317,7 @@ export class Welcome extends React.Component {
         <Panel title='Event Detail'>
           <Table>
             <TableHead>
-              <th><td><Button type='default' title='&emsp;Answers&emsp;' asize='xs' /></td></th>
+              <td><Button type='default' title='&emsp;Answers&emsp;' asize='xs' /></td>
               {this.getDaysList()}
             </TableHead>
             <TableBody>
