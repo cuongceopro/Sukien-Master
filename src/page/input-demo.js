@@ -49,6 +49,13 @@ export class InputDemo extends React.Component {
     var time = this.state.time.split('\n');
     console.log(time)
 
+    if(this.state.title === ''){
+      alert('Xin vui lòng nhập tên Event.')
+    } else if (this.state.time === ''){
+      alert('Xin vui lòng nhập Thời gian.')
+    }
+    else {
+
     fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addevent', {
       method: 'POST',
       headers: {
@@ -68,33 +75,22 @@ export class InputDemo extends React.Component {
       .catch((error) => {
         console.error(error);
       });
-
+    }
   }
 
   render() {
     return (
       <Page title='Create Event'>
-
         <Row>
           <Col>
 
-            <Panel title='How to use ?'>
-              1. Nhập thông tin Event  <br  />
-              2. Nhấn tạo Event <br />
-              3. Share link cho những người sẽ tham gia
-            </Panel>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-
-            <Panel title='Event Detail'>
+            <Panel title='Event Info'>
 
               <form>
-                <p>Event Title</p>
+                <p>Tên Event</p>
                 <input
                   className='form-control '
-                  placeholder='Enter Tittle'
+                  placeholder='Nhập tên event'
                   name='title'
                   onChange={e => this.onChangeText(e)}
                   value={this.state.title} />
@@ -102,7 +98,7 @@ export class InputDemo extends React.Component {
                 <p>Memo</p>
                 <input
                   className='form-control '
-                  placeholder='Enter Memo'
+                  placeholder='Memo'
                   name='memo'
                   onChange={e => this.onChangeText(e)}
                   value={this.state.memo} />

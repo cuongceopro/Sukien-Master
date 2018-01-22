@@ -17,33 +17,33 @@ const successListData = ['2/3', '3/3', '1/3', '0/3']
 const warningListData = ['0/3', '0/3', '1/3', '2/3']
 const removeListData = ['1/3', '0/3', '1/3', '1/3']
 
-const answersData =  [
+const answersData = [
   {
-      'name' : 'Yamada Rina',
-      'data' : [
-          '0',
-          '0',
-          '0',
-          '1',
-      ]
+    'name': 'Yamada Rina',
+    'data': [
+      '0',
+      '0',
+      '0',
+      '1',
+    ]
   },
   {
-      'name' : 'Cuong Ceopro',
-      'data' : [
-          '0',
-          '0',
-          '1',
-          '1',
-      ]
+    'name': 'Cuong Ceopro',
+    'data': [
+      '0',
+      '0',
+      '1',
+      '1',
+    ]
   },
   {
-      'name' : 'Le VanThanh',
-      'data' : [
-          '2',
-          '0',
-          '2',
-          '2',
-      ]
+    'name': 'Le VanThanh',
+    'data': [
+      '2',
+      '0',
+      '2',
+      '2',
+    ]
   }
 ];
 
@@ -81,11 +81,11 @@ export class Home extends React.Component {
 
   getAnswersList() {
     var answersList = answersData.map((answer) =>
-        <TableRow>
-          <td>{answer.name}</td>
-          {this.makeCollum(answer.data)}
-        </TableRow>
-      );
+      <TableRow>
+        <td>{answer.name}</td>
+        {this.makeCollum(answer.data)}
+      </TableRow>
+    );
     return answersList;
   }
 
@@ -120,19 +120,19 @@ export class Home extends React.Component {
 
   getDaysList() {
     var daysList = daysListData.map((day) => {
-        if (isMax[day]) {
-          return <td><Button type='success' title={day} asize='xs' /></td>
-        }
-        else {
-          return <td><Button type='default' title={day} asize='xs' /></td>;
-        }
+      if (isMax[day]) {
+        return <td><Button type='success' title={day} asize='xs' /></td>
       }
-      );
-    
+      else {
+        return <td><Button type='default' title={day} asize='xs' /></td>;
+      }
+    }
+    );
+
     return daysList;
   }
 
-  onCreate(e){
+  onCreate(e) {
     this.props.history.push('/create')
   }
 
@@ -185,88 +185,111 @@ export class Home extends React.Component {
     );
 
     const successList = successListData.map((element) =>
-    <th>{element}</th>
-  );
-  const warningList = warningListData.map((element) =>
-    <th>{element}</th>
-  );
-  const removeList = removeListData.map((element) =>
-    <th>{element}</th>
-  );
+      <th>{element}</th>
+    );
+    const warningList = warningListData.map((element) =>
+      <th>{element}</th>
+    );
+    const removeList = removeListData.map((element) =>
+      <th>{element}</th>
+    );
 
 
     return (
       <Page title='SUKIEN-MASTER'>
-            <Panel title='How to use ?'>
-            <p>Vui lòng làm theo các bước sau.</p>
-            </Panel>
+        <Panel title='[SAMPLE] Event Detail'>
+          <Table>
+            <TableHead>
+              <th></th>
+              {this.getDaysList()}
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <td><Button type='success' title='' asize='xs' /></td>
+                {successList}
+              </TableRow>
+              <TableRow>
+                <td><Button type='warning' title='' asize='xs' /></td>
+                {warningList}
+              </TableRow>
+              <TableRow>
+                <td><Button type='remove' title='' asize='xs' /></td>
+                {removeList}
+              </TableRow>
+              {this.getAnswersList()}
+            </TableBody>
+          </Table>
+        </Panel>
+        <Panel title='How to use ?'>
+          <p>Vui lòng làm theo các bước sau.</p>
+        </Panel>
         {/*}
         <Row>
           <Col>
 
             <Panel title='How to use ?'>
     */}
-              1. Nhập thông tin Event với các lựa chọn về thời gian<br />
-                <br />
+        1. Nhập thông tin Event với các lựa chọn về thời gian<br />
+        <br />
 
-                  <Panel title='[SAMPLE] Create Event'>
+        <Panel title='[SAMPLE] Create Event'>
 
-                  <Input
-                      label='Event Title'
-                      value = 'Họp tất niên' 
-                      disabled
-                      />
-                      <p>Memo</p>
-                  <Textarea
-                      name='textarea'
-                      value = 'Dự định sẽ họp tất niên nên mọi người cho ý kiến nhé !'
-                      name='time' 
-                      disabled/>
-                      <p>Time</p>
-                    <Textarea
-                      name='textarea'
-                      value='2017-12-13 18:00~21:00&#13;&#10;2017-12-20 13:00~16:00&#13;&#10;2017-12-23 13:00~16:00'
-                      name='time' 
-                      disabled/>
-                    <Button type="add" title="Create" disabled/>
-                  </Panel>
-              2. Share link cho những người sẽ tham gia <br />
-                  <br />
-                  <Panel title='[SAMPLE] Event Link'>
-                    <Input
-                      label=''
-                      value='https://sukien-master/eventDetail/1010101010181101010101010811010' 
-                      disabled/>
-                    <br />
-                  </Panel>
+          <Input
+            label='Event Title'
+            value='Họp tất niên'
+            disabled
+          />
+          <p>Memo</p>
+          <Textarea
+            name='textarea'
+            value='Dự định sẽ họp tất niên nên mọi người cho ý kiến nhé !'
+            name='time'
+            disabled />
+          <p>Time</p>
+          <Textarea
+            name='textarea'
+            value='2017-12-13 18:00~21:00&#13;&#10;2017-12-20 13:00~16:00&#13;&#10;2017-12-23 13:00~16:00'
+            name='time'
+            disabled />
+          <Button type="add" title="Create" disabled />
+        </Panel>
+        2. Share link cho những người sẽ tham gia <br />
+        <br />
+        <Panel title='[SAMPLE] Event Link'>
+          <Input
+            label=''
+            value='https://sukien-master/eventDetail/1010101010181101010101010811010'
+            disabled />
+          <br />
+        </Panel>
 
-              3. Người tham gia lựa chọn ngày giờ phù hợp với mình  <br />
-                  <br />
-                  <Panel title='[SAMPLE] Add'>
-                    <Input
-                      label='Name'
-                      value='Thanh' 
-                      disabled/>
-                    <Table>
-                      <TableHead>
-                        {daysList}
-                      </TableHead>
-                      <TableBody>
-                        <TableRow>
-                          {selectList}
-                        </TableRow>
-                        <TableRow>
-                          {this.getaddList()}
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                    <br />
-                    <Button type="add" disabled/>
-                  </Panel>
+        3. Người tham gia lựa chọn ngày giờ phù hợp với mình  <br />
+        <br />
+        <Panel title='[SAMPLE] Add'>
+          <Input
+            label='Name'
+            value='Thanh'
+            disabled />
+          <Table>
+            <TableHead>
+              {daysList}
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                {selectList}
+              </TableRow>
+              <TableRow>
+                {this.getaddList()}
+              </TableRow>
+            </TableBody>
+          </Table>
+          <br />
+          <Button type="add" disabled />
+        </Panel>
 
-              4. Lựa chọn phương án phù hợp nhất cho tất cả mọi người  <br />
-              <br />
-                <Panel title='[SAMPLE] Event Detail'>
+        4. Lựa chọn phương án phù hợp nhất cho tất cả mọi người  <br />
+        <br />
+        <Panel title='[SAMPLE] Event Detail'>
           <Table>
             <TableHead>
               <th></th>
@@ -290,10 +313,10 @@ export class Home extends React.Component {
           </Table>
         </Panel>
         <Panel title='CREATE EVENT'>
-        <p>Nhấn vào link dưới để tạo Event. </p>
+          <p>Nhấn vào link dưới để tạo Event. </p>
           <Button type='success' title='Create New Event Now !' onClick={this.onCreate.bind(this)} asize='xs' />
-            </Panel>
-              {/*}
+        </Panel>
+        {/*}
             </Panel>
           </Col>
         </Row>

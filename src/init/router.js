@@ -24,7 +24,7 @@ import { NotFound } from 'src/page/not-found';
 const redirect = <Redirect from="/react-webpack-skeleton" to="/" />;
 
 export const AppRouter = (
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
     {redirect}
     <Route path='/login' component={Login} />
     <Route component={AppLayout}>

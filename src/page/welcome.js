@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-flex-proto';
 import { response } from '../api/stub';
-import { Page, Panel, Table, TableHead, TableBody, TableRow, Button, EditableText, Pagination, Breadcrumbs, Input, Select } from 'react-blur-admin';
+import { Page, Panel, Table, TableHead, TableBody, TableRow, Button, EditableText, Pagination, Breadcrumbs, Input, Select, Textarea } from 'react-blur-admin';
 
 export class Welcome extends React.Component {
   constructor(props) {
@@ -21,6 +21,11 @@ export class Welcome extends React.Component {
 
   componentWillMount() {
     let _this = this;
+    console.log('Props: ')
+    console.log(this.props)
+    console.log(this.props.params.exec_id)
+    //console.log(this.props.match.params.exec_id)
+
     return fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
       method: 'POST',
       body: { "answer": "" },
@@ -32,7 +37,7 @@ export class Welcome extends React.Component {
         data.daysList.forEach(function (value) {
           addData[value] = '0';
         });
-        _this.setState({ addData : addData });
+        _this.setState({ addData: addData });
         _this.test(data)
       })
       .catch((error) => {
@@ -40,8 +45,8 @@ export class Welcome extends React.Component {
       });
   }
 
-  test(data){
-    
+  test(data) {
+
     var successListData = [];
     var warningListData = [];
     var removeListData = [];
@@ -215,27 +220,36 @@ export class Welcome extends React.Component {
       data: addList
     });
 
-    fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        answer: {
-          "name": _this.state.name,
-          "data": addList
-        }
-      })
-    }).then((response) => response.json())
-      .then((response) => {
-        console.log(response)
-        var data = JSON.parse(response)
-        _this.test(data)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (this.state.name === null) {
+      alert('Xin vui lòng nhập tên.')
+    }
+    else {
+      fetch('https://srb5as1ds6.execute-api.ap-northeast-1.amazonaws.com/sukien_master/addanswer?exec_id=' + _this.props.params.exec_id, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          answer: {
+            "name": _this.state.name,
+            "data": addList
+          }
+        })
+      }).then((response) => response.json())
+        .then((response) => {
+          console.log(response)
+          var data = JSON.parse(response)
+          _this.test(data)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
+
+  onCreate(e) {
+    this.props.history.push('/create')
   }
 
   render() {
@@ -311,9 +325,26 @@ export class Welcome extends React.Component {
     return (
       <Page title='SU KIEN MASTER'>
         <Panel title='Event Detail'>
+
+          <form>
+            <p>Tên Event</p>
+            <input
+              className='form-control '
+              name='title'
+              value={this.state.data ? this.state.data.title : ''}
+              disabled />
+          </form>
+          <br />
+          <p>Memo</p>
+          <Textarea
+            name='textarea'
+            value={this.state.data ? this.state.data.memo : ''}
+            name='memo'
+            disabled />
+
           <Table>
             <TableHead>
-              <th><td><Button type='default' title='&emsp;Answers&emsp;' asize='xs' /></td></th>
+              <td><Button type='default' title='&emsp;Answers&emsp;' asize='xs' /></td>
               {this.getDaysList()}
             </TableHead>
             <TableBody>
@@ -340,9 +371,9 @@ export class Welcome extends React.Component {
           </Table>
         </Panel>
 
-        <Panel title='Add'>
+        <Panel title='Thêm người tham gia'>
           <form>
-            <p>Name</p>
+            <p>Tên người tham gia</p>
             <input
               className='form-control '
               placeholder='Enter Name'
@@ -350,6 +381,7 @@ export class Welcome extends React.Component {
               onChange={e => this.handleChangeName(e)}
               value={this.state.name} />
           </form>
+          <br />
           {/*
           <Input
             label='Name'
@@ -374,6 +406,20 @@ export class Welcome extends React.Component {
           <br />
           <br />
           <Button type="add" onClick={this.addAnswer.bind(this)} />
+        </Panel>
+
+        <Panel title='Event Link'>
+          <p>Share link dưới đây cho những người bạn muốn tham gia cùng. </p>
+          <Input
+            label=''
+            value={'https://sukien-master.com/eventDetail/' + this.props.params.exec_id}
+            disabled />
+          <br />
+        </Panel>
+
+        <Panel title='CREATE EVENT'>
+          <p>Nhấn vào link dưới để tạo Event. </p>
+          <Button type='success' title='Create New Event Now !' onClick={this.onCreate.bind(this)} asize='xs' />
         </Panel>
 
       </Page>
