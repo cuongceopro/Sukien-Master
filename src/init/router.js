@@ -28,7 +28,7 @@ export const AppRouter = (
     {redirect}
     <Route path='/login' component={Login} />
     <Route component={AppLayout}>
-      <Route path='/' component={Home} />
+      <Route path='/' component={Welcome} />
       <Route path='/create' component={InputDemo} />
       <Route path='/eventDetail/:exec_id' component={Welcome} />
       <Route path='/about' component={About} />
